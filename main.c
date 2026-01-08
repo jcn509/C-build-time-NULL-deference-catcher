@@ -52,7 +52,7 @@ typedef struct TestType {
     DETECT_BAD_ACESSS(move_to) \
     borrow_c_internal_moved##move_from = true; \
     borrow_c_internal_moved##move_to = false; \
-    borrow_c_internal##move_to = borrow_c_internal##move_to;
+    borrow_c_internal##move_to = borrow_c_internal##move_from;
 
 #define READ_ONLY_ACCESS_BEGIN(name) \
     { \
