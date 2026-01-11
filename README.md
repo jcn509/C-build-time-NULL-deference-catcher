@@ -55,7 +55,7 @@ If the compiler can prove that the pointer is not NULL (i.e. that if statement i
 If it cannot, then you will get a linker error containing the variable name, file name and line number where there
 may be a NULL deference.
 (null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_13 in the example above.)
-to tell you which variable you are potentially dereferencing when it is NULL and on what file and line you can find the problematic code.
+
 The API also prevents you from accessing the pointer without using the macros provided so you can't accidentally
 skip the NULL checks. Because the compiler must be eliminating the checks in order for it to successfully compile the file
 you can be sure that there is no runtime overhead!
