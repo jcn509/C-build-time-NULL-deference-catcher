@@ -24,6 +24,11 @@ function(add_failure_example example_name source expected_error_message)
     set_tests_properties(${example_name} PROPERTIES
         PASS_REGULAR_EXPRESSION "${expected_error_message}"
     )
+
+    # These should compile if we turn off NULL checks
+    add_executable(${example_name}_null_check_disabled ${source})
+    target_link_libraries(${example_name}_null_check_disabled ${PROJECT_NAME})
+    target_compile_definitions(${example_name}_null_check_disabled PRIVATE NC_PTR_DISABLE_NULL_CHECKS=1)
 endfunction()
 
 add_example(basics src/1_basics.c)
