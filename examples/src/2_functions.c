@@ -59,7 +59,7 @@ int main() {
         compile time. Before the value is converted there is a
         compile-time check to make sure it is not NULL.
 
-        In this case the function uses a NULL checked
+        In this case the function uses a NULL-checked
         pointer so it will be forced to check if the ptr is NULL
         before it can be used.
     */
@@ -68,14 +68,14 @@ int main() {
     OutputVariable(my_raw_ptr);
 
     /*
-        Now the raw pointer and the NULL checked pointer
+        Now the raw pointer and the NULL-checked pointer
         both point to the same integer
     */
     DEREFERENCE_NC_PTR_WRITE(my_nc_ptr, 5);
     assert(*my_raw_ptr == 5);
     /* 
         We can also pass the raw pointer to a function that does
-        not use a NULL checked pointer
+        not use a NULL-checked pointer
     */
     OutputVariable_UNSAFE(my_raw_ptr);
     /* doing my_raw_ptr = NULL; would not effect my_nc_ptr */
@@ -84,7 +84,7 @@ int main() {
         There is an even less safe alternative that does not
         perform a NULL check. You should only use this method
         if you want to access the pointer value to pass it to
-        some code that does not use NULL checked pointers and
+        some code that does not use NULL-checked pointers and
         you do not care if it is NULL because that code can
         handle it.
         In this case OutputVariable_UNSAFE cannot correctly

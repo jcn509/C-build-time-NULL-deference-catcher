@@ -34,12 +34,12 @@ int main() {
 
     NULL_CHECKED_PTR(unsigned char*, nc_image_data_copy) = NULL;
 
-    /* There is a special macro used to assign to a NULL checked pointer field */
+    /* There is a special macro used to assign to a NULL-checked pointer field */
     STRUCT_FIELD_ASSIGN_NC_PTR(my_sprite, nc_image_data, original_image);
 
     /*
-        In order to access the data in a NULL checked pointer field of the struct
-        we first need to copy the fields value into a NULL checked pointer
+        In order to access the data in a NULL-checked pointer field of the struct
+        we first need to copy the fields value into a NULL-checked pointer
     */
     STRUCT_FIELD_NC_PTR_COPY(nc_image_data_copy, my_sprite, nc_image_data);
     for(i=0; i<image_size; i++) {
@@ -70,7 +70,7 @@ int main() {
     }
 
     /*
-        If you have a NULL checked pointer to the struct then you can either
+        If you have a NULL-checked pointer to the struct then you can either
         dereference it or use UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR and then proceed
         as above
     */

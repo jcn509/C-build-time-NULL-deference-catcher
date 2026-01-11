@@ -1,6 +1,6 @@
 /**
  * This example showcases several different methods for iterating through
- * an array using a NULL checked pointer forwards and backwards. Several
+ * an array using a NULL-checked pointer forwards and backwards. Several
  * of the examples appear to be too complex for my compiler to determine
  * that the pointer is not NULL and so they show the limitations of this
  * approach. 
@@ -21,7 +21,7 @@ static void IterateThroughArrayForwards() {
     size_t i=0;
     /*
         There are several methods for iterating through an array pointed
-        to by a NULL checked pointer which are listed below
+        to by a NULL-checked pointer which are listed below
     */
 
 
@@ -96,7 +96,7 @@ static void IterateThroughArrayBackwards() {
 
     /*
         There are several methods for iterating through an array pointed
-        to by a NULL checked pointer which are listed below
+        to by a NULL-checked pointer which are listed below
     */
 
     assert(*foo_array_last_element == 8);
