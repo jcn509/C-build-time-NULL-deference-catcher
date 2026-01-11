@@ -14,7 +14,7 @@
 #include "null_checked_ptr.h"
 
 
-static void IterateThroughArrayForwards() {
+static void IterateThroughArrayForwards(void) {
     int foo_array[] =  {6, 5, 3, 7, 8};
     NC_PTR(int*, my_nc_array_ptr) = foo_array;
     const size_t foo_array_size = sizeof(foo_array) / sizeof(foo_array[0]);
@@ -33,16 +33,16 @@ static void IterateThroughArrayForwards() {
 
     for(i=0; i<foo_array_size; i++) {
         int element_value = 0;
-        NC_PTR_DEREFERENCE_READ(element_value, my_nc_array_ptr);
-        printf("pre increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
-
-        assert(!NC_PTR_IS_NULL(my_nc_array_ptr));
         /*
             This method appears to prevent my compiler from
             determining that the pointer is not NULL in debug
             mode (but not release mode) so I have to add a check
         */
         if(!NC_PTR_IS_NULL(my_nc_array_ptr)) {
+            NC_PTR_DEREFERENCE_READ(element_value, my_nc_array_ptr);
+            printf("pre increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+
+            assert(!NC_PTR_IS_NULL(my_nc_array_ptr));
             /* ++my_nc_array_ptr */
             NC_PTR_PRE_INCREMENT(my_nc_array_ptr);
         }
@@ -52,16 +52,16 @@ static void IterateThroughArrayForwards() {
 
     for(i=0; i<foo_array_size; i++) {
         int element_value = 0;
-        NC_PTR_DEREFERENCE_READ(element_value, my_nc_array_ptr);
-        assert(element_value == foo_array[i]);
-        printf("post increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
-
         /*
             This method appears to prevent my compiler from
             determining that the pointer is not NULL in debug
             mode (but not release mode) so I have to add a check
         */
         if(!NC_PTR_IS_NULL(my_nc_array_ptr)) {
+            NC_PTR_DEREFERENCE_READ(element_value, my_nc_array_ptr);
+            assert(element_value == foo_array[i]);
+            printf("post increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+
             /* my_nc_array_ptr++ */
             NC_PTR_POST_INCREMENT(my_nc_array_ptr);
         }
@@ -70,16 +70,16 @@ static void IterateThroughArrayForwards() {
 
     for(i=0; i<foo_array_size; i++) {
         int element_value = 0;
-        NC_PTR_DEREFERENCE_READ(element_value, my_nc_array_ptr);
-        assert(element_value == foo_array[i]);
-        printf("Add to ptr my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
-
         /*
             This method appears to prevent my compiler from
             determining that the pointer is not NULL in debug
             mode (but not release mode) so I have to add a check
         */
         if(!NC_PTR_IS_NULL(my_nc_array_ptr)) {
+            NC_PTR_DEREFERENCE_READ(element_value, my_nc_array_ptr);
+            assert(element_value == foo_array[i]);
+            printf("Add to ptr my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+
             /* my_nc_array_ptr += 1 */
             NC_PTR_ADDITION_ASSIGNMENT(my_nc_array_ptr, 1);
         }
@@ -87,7 +87,7 @@ static void IterateThroughArrayForwards() {
     NC_PTR_ASSIGN(my_nc_array_ptr, foo_array);
 }
 
-static void IterateThroughArrayBackwards() {
+static void IterateThroughArrayBackwards(void) {
     const int foo_array[] =  {6, 5, 3, 7, 8};
     const size_t foo_array_size = 5;
     const int* const foo_array_last_element = foo_array + foo_array_size - 1;
