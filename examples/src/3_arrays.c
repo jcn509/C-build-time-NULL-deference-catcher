@@ -6,6 +6,7 @@
  * approach. 
  */
 
+#include <assert.h>
 #include <stdio.h>
 
 #define NC_PTR_SAFE_FILE_NAME arrays_c
@@ -33,6 +34,9 @@ static void IterateThroughArrayForwards() {
     for(i=0; i<foo_array_size; i++) {
         int element_value = 0;
         DEREFERENCE_NC_PTR_READ(element_value, my_nc_array_ptr);
+        printf("pre increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+
+        assert(!IS_NC_PTR_NULL(my_nc_array_ptr));
         /*
             This method appears to prevent my compiler from
             determining that the pointer is not NULL in debug
@@ -42,7 +46,6 @@ static void IterateThroughArrayForwards() {
             /* ++my_nc_array_ptr */
             PRE_INCREMENT_NC_PTR(my_nc_array_ptr);
         }
-        printf("pre increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
     }
     /* Reset the pointer value */
     ASSIGN_NC_PTR(my_nc_array_ptr, foo_array);
@@ -50,50 +53,63 @@ static void IterateThroughArrayForwards() {
     for(i=0; i<foo_array_size; i++) {
         int element_value = 0;
         DEREFERENCE_NC_PTR_READ(element_value, my_nc_array_ptr);
-
-        /* my_nc_array_ptr++ */
-        POST_INCREMENT_NC_PTR(my_nc_array_ptr);
-
+        assert(element_value == foo_array[i]);
         printf("post increment my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+
+        /*
+            This method appears to prevent my compiler from
+            determining that the pointer is not NULL in debug
+            mode (but not release mode) so I have to add a check
+        */
+        if(!IS_NC_PTR_NULL(my_nc_array_ptr)) {
+            /* my_nc_array_ptr++ */
+            POST_INCREMENT_NC_PTR(my_nc_array_ptr);
+        }
     }
     ASSIGN_NC_PTR(my_nc_array_ptr, foo_array);
 
     for(i=0; i<foo_array_size; i++) {
         int element_value = 0;
         DEREFERENCE_NC_PTR_READ(element_value, my_nc_array_ptr);
-
-        /* my_nc_array_ptr += 1 */
-        INCREASE_NC_PTR(my_nc_array_ptr, 1);
-
+        assert(element_value == foo_array[i]);
         printf("Add to ptr my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+
+        /*
+            This method appears to prevent my compiler from
+            determining that the pointer is not NULL in debug
+            mode (but not release mode) so I have to add a check
+        */
+        if(!IS_NC_PTR_NULL(my_nc_array_ptr)) {
+            /* my_nc_array_ptr += 1 */
+            INCREASE_NC_PTR(my_nc_array_ptr, 1);
+        }
     }
     ASSIGN_NC_PTR(my_nc_array_ptr, foo_array);
 }
 
 static void IterateThroughArrayBackwards() {
-    int foo_array[] =  {6, 5, 3, 7, 8};
-    const size_t foo_array_size = sizeof(foo_array) / sizeof(foo_array[0]);
-    NULL_CHECKED_PTR(int*, my_nc_array_ptr) = foo_array + (foo_array_size - 1);
+    const int foo_array[] =  {6, 5, 3, 7, 8};
+    const size_t foo_array_size = 5;
+    const int* const foo_array_last_element = foo_array + foo_array_size - 1;
+    NULL_CHECKED_PTR(const int*, my_nc_array_ptr) = foo_array_last_element;
     size_t i=0;
+
     /*
         There are several methods for iterating through an array pointed
         to by a NULL checked pointer which are listed below
     */
 
+    assert(*foo_array_last_element == 8);
 
-    i=foo_array_size-1;
-    while(1) {
+    for(i=0; i < foo_array_size; i++) {
         int element_value = 0;
         DEREFERENCE_NC_PTR_READ_OFFSET(element_value, my_nc_array_ptr, -i);
-        printf("Read offset my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
-
-        if(i == 0) {
-            break;
-        }
-        i--;
+        printf("Backwards read offset my_nc_array_ptr[%i]=%i *foo_array_last_element=%i *(foo_array_last_element -i)=%i\n", (int)i, element_value, *foo_array_last_element, *(foo_array_last_element -i));
+        assert(element_value == foo_array[foo_array_size - (i +1)]);
     }
 
     i=foo_array_size-1;
+    assert(*foo_array_last_element == foo_array[i]);
     while(1) {
         int element_value = 0;
         /*
@@ -102,23 +118,24 @@ static void IterateThroughArrayBackwards() {
             in debug mode (but not in release mode) so I have added this
             check
         */
+        assert(!IS_NC_PTR_NULL(my_nc_array_ptr));
         if(!IS_NC_PTR_NULL(my_nc_array_ptr)) {
             DEREFERENCE_NC_PTR_READ(element_value, my_nc_array_ptr);
+            printf("Backwards pre decrement my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
+            assert(element_value == foo_array[i]);
        
             /* --my_nc_array_ptr */
             PRE_DECREMENT_NC_PTR(my_nc_array_ptr);
         }
-        
-        printf("pre decrement my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
 
         if(i == 0) {
             break;
         }
         i--;
     }
-    /* Reset the pointer value */
-    ASSIGN_NC_PTR(my_nc_array_ptr, foo_array + (foo_array_size - 1));
 
+    /* Reset the pointer value */
+    ASSIGN_NC_PTR(my_nc_array_ptr, foo_array_last_element);
     i=foo_array_size-1;
     while(1) {
         int element_value = 0;
@@ -128,22 +145,23 @@ static void IterateThroughArrayBackwards() {
             in debug mode (but not in release mode) so I have added this
             check
         */
+        assert(!IS_NC_PTR_NULL(my_nc_array_ptr));
         if(!IS_NC_PTR_NULL(my_nc_array_ptr)) {
             DEREFERENCE_NC_PTR_READ(element_value, my_nc_array_ptr);
+            assert(element_value == foo_array[i]);
+            printf("Backwards post decrement my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
 
             /* my_nc_array_ptr-- */
             POST_DECREMENT_NC_PTR(my_nc_array_ptr);
         }
 
-        printf("post decrement my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
-
         if(i == 0) {
             break;
         }
         i--;
     }
-    ASSIGN_NC_PTR(my_nc_array_ptr, foo_array + (foo_array_size - 1));
 
+    ASSIGN_NC_PTR(my_nc_array_ptr, foo_array_last_element);
     i=foo_array_size-1;
     while(1) {
         int element_value = 0;
@@ -153,21 +171,21 @@ static void IterateThroughArrayBackwards() {
             in debug mode (but not in release mode) so I have added this
             check
         */
+        assert(!IS_NC_PTR_NULL(my_nc_array_ptr));
         if(!IS_NC_PTR_NULL(my_nc_array_ptr)) {
             DEREFERENCE_NC_PTR_READ(element_value, my_nc_array_ptr);
+            assert(element_value == foo_array[i]);
+            printf("Backwards Subtract from ptr my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
 
             /* my_nc_array_ptr -= 1 */
             DECREASE_NC_PTR(my_nc_array_ptr, 1);
         }
-
-        printf("Subtract from ptr my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
 
         if(i == 0) {
             break;
         }
         i--;
     }
-    ASSIGN_NC_PTR(my_nc_array_ptr, foo_array + (foo_array_size - 1));
 }
 
 int main() {
