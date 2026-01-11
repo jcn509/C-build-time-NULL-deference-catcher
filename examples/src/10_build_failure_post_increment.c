@@ -5,7 +5,7 @@
 
 #include "null_checked_ptr.h"
 
-int main() {
+int main(void) {
     NC_PTR(int*, my_nc_ptr) = NULL;
 
     /* Incrementing a NULL pointer will cause build failure */

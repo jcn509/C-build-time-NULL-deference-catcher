@@ -5,7 +5,7 @@
 
 #include "null_checked_ptr.h"
 
-int main() {
+int main(void) {
     int foo = 2;
     int foo2 = 53;
     NC_PTR(int*, my_nc_ptr) = &foo;

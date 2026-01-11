@@ -14,7 +14,7 @@ typedef struct Sprite {
     NC_PTR(unsigned char*, nc_image_data);
 } Sprite;
 
-int main() {
+int main(void) {
     Sprite my_sprite = {
         1,
         2,

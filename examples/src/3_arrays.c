@@ -188,7 +188,7 @@ static void IterateThroughArrayBackwards() {
     }
 }
 
-int main() {
+int main(void) {
     IterateThroughArrayForwards();
     IterateThroughArrayBackwards();
 

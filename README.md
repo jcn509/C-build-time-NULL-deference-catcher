@@ -1,6 +1,6 @@
 # C build time NULL deference catcher
 
-This library abuses your C compilers dead code elimination optimisations to catch potential NULL dereferences at build time with no runtime overhead.
+This library abuses your C compiler's dead code elimination optimisations to catch potential NULL dereferences at build time with no runtime overhead.
 
 ## How does it work?
 
@@ -40,7 +40,7 @@ if(rand() & 1) {
 _PRIVATE_NC_PTR_DO_NOT_TOUCH_my_nc_ptr = NULL;
 {
     {
-        void null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_13 ();
+        void null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_13 (void);
         if (_PRIVATE_NC_PTR_DO_NOT_TOUCH_my_nc_ptr == NULL) {
             null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_13 ();
         } 
@@ -97,7 +97,7 @@ NC_PTR_DEREFERENCE_READ(my_nc_ptr_value, my_nc_ptr);
 
 The library is header-only and shipped in a single header file in the single_include directory you just need to
 add this to your include path. If you use CMake, then you could also add this project as a subdirectory and
-add then link against c_null_checked_ptrs.
+add then link against c_null_checked_ptrs. It is compatible with C89 and up.
 
 As this library depends on dead code elimination you **MUST** use an optimising compiler and you must
 have dead code optimisation optimisations enabled. With Clang and GCC if you are

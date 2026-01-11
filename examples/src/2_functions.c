@@ -45,7 +45,7 @@ void OutputVariable_UNSAFE(const int* const some_nc_ptr) {
     printf("OutputVariable_UNSAFE *some_nc_ptr=%i\n", *some_nc_ptr);
 }
 
-int main() {
+int main(void) {
     int foo = 2;
     NC_PTR(int*, my_nc_ptr) = &foo;
     int* my_raw_ptr = NULL;

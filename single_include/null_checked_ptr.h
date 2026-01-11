@@ -28,7 +28,7 @@
 
 #define _PRIVATE_NC_PTR_ERROR_IF_COULD_BE_NULL(nc_ptr_name) \
     { \
-        void _PRIVATE_NULL_DEREFERENCE_POSSIBLE_MARKER(nc_ptr_name) (); \
+        void _PRIVATE_NULL_DEREFERENCE_POSSIBLE_MARKER(nc_ptr_name) (void); \
         if (_PRIVATE_NC_NAME(nc_ptr_name) == NULL) { \
             _PRIVATE_NULL_DEREFERENCE_POSSIBLE_MARKER(nc_ptr_name) (); \
         } \
