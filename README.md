@@ -13,7 +13,7 @@ int foo = 2;
 NC_PTR(int*, my_nc_ptr) = &foo;
 int my_nc_ptr_value = 0;
 
-srand(time(NULL));
+srand((unsigned int)time(NULL));
 if(rand() & 1) {
     NC_PTR_ASSIGN(my_nc_ptr, NULL);
 }
@@ -32,7 +32,7 @@ int foo = 2;
 int* _PRIVATE_NC_PTR_DO_NOT_TOUCH_my_nc_ptr = &foo;
 int my_nc_ptr_value = 0;
 
-srand(time(NULL));
+srand((unsigned int)time(NULL));
 if(rand() & 1) {
     NC_PTR_ASSIGN(my_nc_ptr, NULL);
 }
@@ -69,7 +69,7 @@ int foo = 2;
 NC_PTR(int*, my_nc_ptr) = &foo;
 int my_nc_ptr_value = 0;
 
-srand(time(NULL));
+srand((unsigned int)time(NULL));
 if(rand() & 1) {
     NC_PTR_ASSIGN(my_nc_ptr, NULL);
 }
