@@ -103,7 +103,7 @@ static void IterateThroughArrayBackwards(void) {
 
     for(i=0; i < foo_array_size; i++) {
         int element_value = 0;
-        NC_PTR_DEREFERENCE_READ_OFFSET(element_value, my_nc_array_ptr, -i);
+        NC_PTR_DEREFERENCE_READ_NEGATIVE_OFFSET(element_value, my_nc_array_ptr, i);
         printf("Backwards read offset my_nc_array_ptr[%i]=%i *foo_array_last_element=%i *(foo_array_last_element -i)=%i\n", (int)i, element_value, *foo_array_last_element, *(foo_array_last_element -i));
         assert(element_value == foo_array[foo_array_size - (i +1)]);
     }

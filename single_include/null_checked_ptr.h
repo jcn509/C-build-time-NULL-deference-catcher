@@ -58,6 +58,18 @@
         *(_PRIVATE_NC_NAME(nc_ptr_name) + offset) = value; \
     }
 
+#define NC_PTR_DEREFERENCE_READ_NEGATIVE_OFFSET(destination, nc_ptr_name, offset) \
+    { \
+        _PRIVATE_NC_PTR_ERROR_IF_COULD_BE_NULL(nc_ptr_name); \
+        destination = *(_PRIVATE_NC_NAME(nc_ptr_name) - offset); \
+    }
+
+#define NC_PTR_DEREFERENCE_WRITE_NEGATIVE_OFFSET(nc_ptr_name, value, offset) \
+    { \
+        _PRIVATE_NC_PTR_ERROR_IF_COULD_BE_NULL(nc_ptr_name); \
+        *(_PRIVATE_NC_NAME(nc_ptr_name) - offset) = value; \
+    }
+
 #define NC_PTR_DEREFERENCE_READ(destination, nc_ptr_name) \
     NC_PTR_DEREFERENCE_READ_OFFSET(destination, nc_ptr_name, 0)
 
