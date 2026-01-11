@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-#define NC_PTR_SAFE_FILE_NAME array_c
+#define NC_PTR_SAFE_FILE_NAME arrays_c
 
 #include "null_checked_ptr.h"
 
@@ -16,7 +16,7 @@
 static void IterateThroughArrayForwards() {
     int foo_array[] =  {6, 5, 3, 7, 8};
     NULL_CHECKED_PTR(int*, my_nc_array_ptr) = foo_array;
-    size_t foo_array_size = sizeof(foo_array) / sizeof(foo_array[0]);
+    const size_t foo_array_size = sizeof(foo_array) / sizeof(foo_array[0]);
     size_t i=0;
     /*
         There are several methods for iterating through an array pointed
@@ -72,7 +72,7 @@ static void IterateThroughArrayForwards() {
 
 static void IterateThroughArrayBackwards() {
     int foo_array[] =  {6, 5, 3, 7, 8};
-    size_t foo_array_size = sizeof(foo_array) / sizeof(foo_array[0]);
+    const size_t foo_array_size = sizeof(foo_array) / sizeof(foo_array[0]);
     NULL_CHECKED_PTR(int*, my_nc_array_ptr) = foo_array + (foo_array_size - 1);
     size_t i=0;
     /*

@@ -7,7 +7,7 @@
 
 /* Private stuff that does not form part of the API: */
 
-#define _PRIVATE_NC_NAME(nc_ptr_name) _private_null_checked_ptr_##nc_ptr_name
+#define _PRIVATE_NC_NAME(nc_ptr_name) _PRIVATE_NULL_CHECKED_PTR_DO_NOT_TOUCH_ ## nc_ptr_name
 
 #define _NULL_DEREFERENCE_POSSIBLE_MARKER3(var, file_name, line) null_dereference_of_ ## var ## _possible_in_file_ ## file_name ## _on_line_ ## line
 #define _NULL_DEREFERENCE_POSSIBLE_MARKER2(var, file_name, line) _NULL_DEREFERENCE_POSSIBLE_MARKER3(var, file_name, line)
@@ -16,6 +16,7 @@
 #ifdef DISABLE_NC_CHECKS
 
 #define _ERROR_IF_NC_PTR_COULD_BE_NULL(nc_ptr_name)
+
 #else
 
 #define _ERROR_IF_NC_PTR_COULD_BE_NULL(nc_ptr_name) \
@@ -25,6 +26,7 @@
             _NULL_DEREFERENCE_POSSIBLE_MARKER(nc_ptr_name) (); \
         } \
     }
+
 #endif
 
 /* Public facing API: */
@@ -98,5 +100,13 @@
         _ERROR_IF_NC_PTR_COULD_BE_NULL(nc_ptr_name); \
         _PRIVATE_NC_NAME(nc_ptr_name) -= value_to_subtract; \
     }
+
+#define STRUCT_FIELD_NC_PTR_COPY(nc_ptr_name, struct_var, nc_ptr_field_name) { \
+    ASSIGN_NC_PTR(nc_ptr_name, (struct_var)._PRIVATE_NC_NAME(nc_ptr_field_name)); \
+}
+
+#define STRUCT_FIELD_ASSIGN_NC_PTR(struct_var, nc_ptr_field_name, value) { \
+    (struct_var)._PRIVATE_NC_NAME(nc_ptr_field_name) = value; \
+}
 
 #endif /* NULL_CHECKED_PTR_H */

@@ -1,6 +1,7 @@
+#include <assert.h>
 #include <stdio.h>
 
-#define NC_PTR_SAFE_FILE_NAME function_c
+#define NC_PTR_SAFE_FILE_NAME functions_c
 
 #include "null_checked_ptr.h"
 
@@ -63,6 +64,7 @@ int main() {
         before it can be used.
     */
     UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR(my_raw_ptr, my_nc_ptr);
+    assert(*my_raw_ptr == 2);
     OutputVariable(my_raw_ptr);
 
     /*
@@ -70,6 +72,7 @@ int main() {
         both point to the same integer
     */
     DEREFERENCE_NC_PTR_WRITE(my_nc_ptr, 5);
+    assert(*my_raw_ptr == 5);
     /* 
         We can also pass the raw pointer to a function that does
         not use a NULL checked pointer
@@ -88,6 +91,7 @@ int main() {
         handle a NULL pointer so this is very risky.0
     */
     OutputVariable_UNSAFE(UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR_NO_NULL_CHECK(my_nc_ptr));
+    assert(*UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR_NO_NULL_CHECK(my_nc_ptr) == 5);
 
     return 0;
 }
