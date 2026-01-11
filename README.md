@@ -103,6 +103,8 @@ As this library depends on dead code elimination you **MUST** use an optimising 
 have dead code optimisation optimisations enabled. With Clang and GCC if you are
 doing a debug build make sure you have -Og enabled. (Note: CMake will not add any optimisation
 flags by default if you don't specify CMAKE_BUILD_TYPE. See CMakeLists.txt for a workaround.)
+If you're using MSVC make sure you have at least /O1 and not /Od or /RTC1. (Again see CMakeLists.txt
+for an example.)
 
 The API is very small and simple.
 Look in the examples folder for a full walkthrough including examples of compilation failures
