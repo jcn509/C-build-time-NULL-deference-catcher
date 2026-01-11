@@ -26,9 +26,9 @@ function(add_failure_example example_name source expected_error_message)
     )
 
     # These should compile if we turn off NULL checks
-    add_executable(${example_name}_null_check_disabled ${source})
-    target_link_libraries(${example_name}_null_check_disabled ${PROJECT_NAME})
-    target_compile_definitions(${example_name}_null_check_disabled PRIVATE NC_PTR_DISABLE_NULL_CHECKS=1)
+    add_executable(${example_name}_null_check_disabled_do_not_run ${source})
+    target_link_libraries(${example_name}_null_check_disabled_do_not_run ${PROJECT_NAME})
+    target_compile_definitions(${example_name}_null_check_disabled_do_not_run PRIVATE NC_PTR_DISABLE_NULL_CHECKS=1)
 endfunction()
 
 add_example(basics src/1_basics.c)
@@ -89,3 +89,10 @@ add_failure_example(
     src/13_compilation_failure_subtraction_assignment.c
     "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_subtraction_assignment_c_on_line_12"
 )
+
+add_failure_example(
+    compilation_failure_dereference_read_null_on_one_branch
+    src/14_compilation_failure_dereference_read_null_on_one_branch.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_fixed_compilation_dereference_read_null_on_one_branch_c_on_line_19"
+)
+add_example(fixed_compilation_dereference_read_null_on_one_branch src/15_fixed_compilation_dereference_read_null_on_one_branch.c)
