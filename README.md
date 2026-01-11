@@ -110,7 +110,7 @@ where potential NULL dereferences are detected. (The files are numbered and you 
 them in order.)
 
 If you find that compiler optimisations are causing issues when you try to use a debugger and
-your compiler doesn't let you turn off problematic optimisations then you can set
+your compiler doesn't let you turn off problematic optimisations, then you can set
 NC_PTR_DISABLE_NULL_CHECKS=1 when compiling which will remove the compile time checks and replace
 them with runtime asserts.
 
