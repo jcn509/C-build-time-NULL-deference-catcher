@@ -81,7 +81,7 @@ static void IterateThroughArrayForwards() {
         */
         if(!IS_NC_PTR_NULL(my_nc_array_ptr)) {
             /* my_nc_array_ptr += 1 */
-            INCREASE_NC_PTR(my_nc_array_ptr, 1);
+            ADDITION_ASSIGNMENT_NC_PTR(my_nc_array_ptr, 1);
         }
     }
     ASSIGN_NC_PTR(my_nc_array_ptr, foo_array);
@@ -178,7 +178,7 @@ static void IterateThroughArrayBackwards() {
             printf("Backwards Subtract from ptr my_nc_array_ptr[%i]=%i\n", (int)i, element_value);
 
             /* my_nc_array_ptr -= 1 */
-            DECREASE_NC_PTR(my_nc_array_ptr, 1);
+            SUBTRACTION_ASSIGNMENT_NC_PTR(my_nc_array_ptr, 1);
         }
 
         if(i == 0) {
