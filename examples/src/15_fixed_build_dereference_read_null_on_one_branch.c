@@ -1,8 +1,9 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-#define NC_PTR_SAFE_FILE_NAME compilation_failure_dereference_read_null_c
+#define NC_PTR_SAFE_FILE_NAME fixed_build_dereference_read_null_on_one_branch_c
 
 #include "null_checked_ptr.h"
 
@@ -10,7 +11,8 @@ int main() {
     int foo = 2;
     NC_PTR(int*, my_nc_ptr) = &foo;
     int my_nc_ptr_value = 0;
-    
+
+    srand(time(NULL));
     if(rand() & 1) {
         NC_PTR_ASSIGN(my_nc_ptr, NULL);
     }

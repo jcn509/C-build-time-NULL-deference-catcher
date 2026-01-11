@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#define NC_PTR_SAFE_FILE_NAME compilation_failure_post_increment_c
+#define NC_PTR_SAFE_FILE_NAME build_failure_post_increment_c
 
 #include "null_checked_ptr.h"
 

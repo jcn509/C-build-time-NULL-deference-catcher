@@ -37,62 +37,62 @@ add_example(arrays src/3_arrays.c)
 add_example(structs src/4_structs.c)
 
 add_failure_example(
-    compilation_failure_dereference_read_null
-    src/5_compilation_failure_dereference_read_null.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_dereference_read_null_c_on_line_16"
+    build_failure_dereference_read_null
+    src/5_build_failure_dereference_read_null.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_16"
 )
 
 add_failure_example(
-    compilation_failure_dereference_write_null
-    src/6_compilation_failure_dereference_write_null.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_dereference_write_null_c_on_line_16"
+    build_failure_dereference_write_null
+    src/6_build_failure_dereference_write_null.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_write_null_c_on_line_16"
 )
 
 add_failure_example(
-    compilation_failure_convert_to_raw_ptr_null
-    src/7_compilation_failure_convert_to_raw_ptr_null.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_convert_to_raw_ptr_null_c_on_line_14"
+    build_failure_convert_to_raw_ptr_null
+    src/7_build_failure_convert_to_raw_ptr_null.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_convert_to_raw_ptr_null_c_on_line_14"
 )
 
 add_failure_example(
-    compilation_failure_pre_increment
-    src/8_compilation_failure_pre_increment.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_pre_increment_c_on_line_12"
+    build_failure_pre_increment
+    src/8_build_failure_pre_increment.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_pre_increment_c_on_line_12"
 )
 
 add_failure_example(
-    compilation_failure_pre_decrement
-    src/9_compilation_failure_pre_decrement.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_pre_decrement_c_on_line_12"
+    build_failure_pre_decrement
+    src/9_build_failure_pre_decrement.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_pre_decrement_c_on_line_12"
 )
 
 add_failure_example(
-    compilation_failure_post_increment
-    src/10_compilation_failure_post_increment.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_post_increment_c_on_line_12"
+    build_failure_post_increment
+    src/10_build_failure_post_increment.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_post_increment_c_on_line_12"
 )
 
 add_failure_example(
-    compilation_failure_post_decrement
-    src/11_compilation_failure_post_decrement.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_post_decrement_c_on_line_12"
+    build_failure_post_decrement
+    src/11_build_failure_post_decrement.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_post_decrement_c_on_line_12"
 )
 
 add_failure_example(
-    compilation_failure_addition_assignment
-    src/12_compilation_failure_addition_assignment.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_addition_assignment_c_on_line_12"
+    build_failure_addition_assignment
+    src/12_build_failure_addition_assignment.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_addition_assignment_c_on_line_12"
 )
 
 add_failure_example(
-    compilation_failure_subtraction_assignment
-    src/13_compilation_failure_subtraction_assignment.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_compilation_failure_subtraction_assignment_c_on_line_12"
+    build_failure_subtraction_assignment
+    src/13_build_failure_subtraction_assignment.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_subtraction_assignment_c_on_line_12"
 )
 
 add_failure_example(
-    compilation_failure_dereference_read_null_on_one_branch
-    src/14_compilation_failure_dereference_read_null_on_one_branch.c
-    "null_dereference_of_my_nc_ptr_possible_in_file_fixed_compilation_dereference_read_null_on_one_branch_c_on_line_19"
+    build_failure_dereference_read_null_on_one_branch
+    src/14_build_failure_dereference_read_null_on_one_branch.c
+    "null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_21"
 )
-add_example(fixed_compilation_dereference_read_null_on_one_branch src/15_fixed_compilation_dereference_read_null_on_one_branch.c)
+add_example(fixed_build_dereference_read_null_on_one_branch src/15_fixed_build_dereference_read_null_on_one_branch.c)

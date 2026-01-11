@@ -5,6 +5,11 @@
 #error "You must define NC_PTR_SAFE_FILE_NAME before including null_checked_ptr.h"
 #endif
 
+
+#ifdef NC_PTR_DISABLE_NULL_CHECKS
+#include <assert.h>
+#endif
+
 /* Private stuff that does not form part of the API: */
 
 #define _PRIVATE_NC_NAME(nc_ptr_name) _PRIVATE_NC_PTR_DO_NOT_TOUCH_ ## nc_ptr_name
@@ -15,8 +20,10 @@
 
 #ifdef NC_PTR_DISABLE_NULL_CHECKS
 
-#define _PRIVATE_NC_PTR_ERROR_IF_COULD_BE_NULL(nc_ptr_name)
-
+#define _PRIVATE_NC_PTR_ERROR_IF_COULD_BE_NULL(nc_ptr_name) \
+    { \
+        assert(_PRIVATE_NC_NAME(nc_ptr_name) != NULL); \
+    }
 #else
 
 #define _PRIVATE_NC_PTR_ERROR_IF_COULD_BE_NULL(nc_ptr_name) \
