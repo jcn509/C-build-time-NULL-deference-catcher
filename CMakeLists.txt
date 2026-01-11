@@ -68,9 +68,10 @@ else()
             set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=integer")
             set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=nullability")
         endif()
+    endif()
 endif()
 
-endif()
+message(STATUS "CMAKE_C_FLAGS = ${CMAKE_C_FLAGS} CMAKE_C_FLAGS_DEBUG = ${CMAKE_C_FLAGS_DEBUG}")
 
 add_library(${PROJECT_NAME} INTERFACE)
 
