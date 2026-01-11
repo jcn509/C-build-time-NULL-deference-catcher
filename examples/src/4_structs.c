@@ -11,7 +11,7 @@ typedef struct Sprite {
     int z;
     int width;
     int height;
-    NULL_CHECKED_PTR(unsigned char*, nc_image_data);
+    NC_PTR(unsigned char*, nc_image_data);
 } Sprite;
 
 int main() {
@@ -32,46 +32,46 @@ int main() {
 
     size_t i = 0;
 
-    NULL_CHECKED_PTR(unsigned char*, nc_image_data_copy) = NULL;
+    NC_PTR(unsigned char*, nc_image_data_copy) = NULL;
 
     /* There is a special macro used to assign to a NULL-checked pointer field */
-    STRUCT_FIELD_ASSIGN_NC_PTR(my_sprite, nc_image_data, original_image);
+    NC_PTR_STRUCT_FIELD_ASSIGN(my_sprite, nc_image_data, original_image);
 
     /*
         In order to access the data in a NULL-checked pointer field of the struct
         we first need to copy the fields value into a NULL-checked pointer
     */
-    STRUCT_FIELD_NC_PTR_COPY(nc_image_data_copy, my_sprite, nc_image_data);
+    NC_PTR_STRUCT_FIELD_COPY(nc_image_data_copy, my_sprite, nc_image_data);
     for(i=0; i<image_size; i++) {
         unsigned char image_element = 0;
-        DEREFERENCE_NC_PTR_READ_OFFSET(image_element, nc_image_data_copy, i);
+        NC_PTR_DEREFERENCE_READ_OFFSET(image_element, nc_image_data_copy, i);
         assert(image_element == original_image[i]);
         printf("original image element %i = %i\n", (int)i, image_element);
     }
 
-    STRUCT_FIELD_ASSIGN_NC_PTR(my_sprite, nc_image_data, new_image);
+    NC_PTR_STRUCT_FIELD_ASSIGN(my_sprite, nc_image_data, new_image);
     /* Must re-copy the pointer value now that it has been updated */
-    STRUCT_FIELD_NC_PTR_COPY(nc_image_data_copy, my_sprite, nc_image_data);
+    NC_PTR_STRUCT_FIELD_COPY(nc_image_data_copy, my_sprite, nc_image_data);
     for(i=0; i<image_size; i++) {
         unsigned char image_element = 0;
-        DEREFERENCE_NC_PTR_READ_OFFSET(image_element, nc_image_data_copy, i);
+        NC_PTR_DEREFERENCE_READ_OFFSET(image_element, nc_image_data_copy, i);
         assert(image_element == new_image[i]);
         printf("updated image element %i = %i\n", (int)i, image_element);
     }
 
     /* We use the same macros if we have a pointer to the struct */
-    STRUCT_FIELD_ASSIGN_NC_PTR(*my_sprite_ptr, nc_image_data, new_image_2);
-    STRUCT_FIELD_NC_PTR_COPY(nc_image_data_copy, *my_sprite_ptr, nc_image_data);
+    NC_PTR_STRUCT_FIELD_ASSIGN(*my_sprite_ptr, nc_image_data, new_image_2);
+    NC_PTR_STRUCT_FIELD_COPY(nc_image_data_copy, *my_sprite_ptr, nc_image_data);
     for(i=0; i<image_size; i++) {
         unsigned char image_element = 0;
-        DEREFERENCE_NC_PTR_READ_OFFSET(image_element, nc_image_data_copy, i);
+        NC_PTR_DEREFERENCE_READ_OFFSET(image_element, nc_image_data_copy, i);
         assert(image_element == new_image_2[i]);
         printf("updated image 2 element %i = %i\n", (int)i, image_element);
     }
 
     /*
         If you have a NULL-checked pointer to the struct then you can either
-        dereference it or use UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR and then proceed
+        dereference it or use UNSAFE_NC_PTR_CONVERT_TO_RAW_PTR and then proceed
         as above
     */
 

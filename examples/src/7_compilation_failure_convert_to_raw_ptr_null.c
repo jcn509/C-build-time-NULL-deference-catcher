@@ -7,11 +7,11 @@
 
 int main() {
     int foo = 2;
-    NULL_CHECKED_PTR(int*, my_nc_ptr) = NULL;
+    NC_PTR(int*, my_nc_ptr) = NULL;
     int* my_raw_ptr = &foo;
 
     /* Fails because the my_nc_ptr is NULL */
-    UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR(my_raw_ptr, my_nc_ptr);
+    UNSAFE_NC_PTR_CONVERT_TO_RAW_PTR(my_raw_ptr, my_nc_ptr);
 
     (void)my_raw_ptr;
 

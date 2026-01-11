@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.5)
 project(
     c_null_checked_ptrs
     VERSION 0.0.1
-    LANGUAGES C)
+    LANGUAGES C
+)
 
 # I want to support the oldest version
 # of C that I can. You can use this
@@ -51,15 +52,18 @@ include(GNUInstallDirs)
 target_include_directories(
     ${PROJECT_NAME}
     INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/single_include>
-              $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+              $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-config)
 install(
     EXPORT ${PROJECT_NAME}-config
     NAMESPACE ${PROJECT_NAME}::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/${PROJECT_NAME}/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
@@ -68,7 +72,3 @@ endif()
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR NULL_CHECKED_PTRS_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
-
-# if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR NULL_CHECKED_PTRS_BUILD_TESTING) AND BUILD_TESTING)
-#     add_subdirectory(tests)
-# endif()

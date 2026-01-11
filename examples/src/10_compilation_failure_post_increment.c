@@ -6,10 +6,10 @@
 #include "null_checked_ptr.h"
 
 int main() {
-    NULL_CHECKED_PTR(int*, my_nc_ptr) = NULL;
+    NC_PTR(int*, my_nc_ptr) = NULL;
 
     /* Incrementing a NULL pointer will cause build failure */
-    POST_INCREMENT_NC_PTR(my_nc_ptr);
+    NC_PTR_POST_INCREMENT(my_nc_ptr);
 
     return 0;
 }

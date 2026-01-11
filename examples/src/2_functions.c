@@ -8,7 +8,7 @@
 /**
  * Prints the value of the pointer to variable to the screen
  */
-void OutputVariable(NULL_CHECKED_PTR(const int* const, some_nc_ptr)) {
+void OutputVariable(NC_PTR(const int* const, some_nc_ptr)) {
     /*
         We have to add an explicit NULL check
         as the compiler will not always be able to prove that
@@ -18,12 +18,12 @@ void OutputVariable(NULL_CHECKED_PTR(const int* const, some_nc_ptr)) {
         not need to add the NULL check because in the compiler
         may be able to prove that someVariable is not NULL.
     */
-    if (IS_NC_PTR_NULL(some_nc_ptr)) {
+    if (NC_PTR_IS_NULL(some_nc_ptr)) {
         printf("OutputVariable someVariable is NULL!\n");
     }
     else {
         int some_nc_ptr_value = 0;
-        DEREFERENCE_NC_PTR_READ(some_nc_ptr_value, some_nc_ptr);
+        NC_PTR_DEREFERENCE_READ(some_nc_ptr_value, some_nc_ptr);
         printf("OutputVariable *some_nc_ptr=%i\n", some_nc_ptr_value);
     }
 }
@@ -33,7 +33,7 @@ void OutputVariable(NULL_CHECKED_PTR(const int* const, some_nc_ptr)) {
  * 
  * This version of the OutputVariable function is not safe
  * as we do not check if someVariable is NULL and as we use
- * a raw pointer and not a NULL_CHECKED_PTR We won't get a
+ * a raw pointer and not a NC_PTR We won't get a
  * build error...
  */
 void OutputVariable_UNSAFE(const int* const some_nc_ptr) {
@@ -47,11 +47,11 @@ void OutputVariable_UNSAFE(const int* const some_nc_ptr) {
 
 int main() {
     int foo = 2;
-    NULL_CHECKED_PTR(int*, my_nc_ptr) = &foo;
+    NC_PTR(int*, my_nc_ptr) = &foo;
     int* my_raw_ptr = NULL;
 
     /*
-        We need to convert the NULL_CHECKED_PTR to a regular
+        We need to convert the NC_PTR to a regular
         "raw" pointer in order to pass it to this function.
         We say this operation is "unsafe" to draw attention
         to it during code as we should only do this conversion
@@ -63,7 +63,7 @@ int main() {
         pointer so it will be forced to check if the ptr is NULL
         before it can be used.
     */
-    UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR(my_raw_ptr, my_nc_ptr);
+    UNSAFE_NC_PTR_CONVERT_TO_RAW_PTR(my_raw_ptr, my_nc_ptr);
     assert(*my_raw_ptr == 2);
     OutputVariable(my_raw_ptr);
 
@@ -71,7 +71,7 @@ int main() {
         Now the raw pointer and the NULL-checked pointer
         both point to the same integer
     */
-    DEREFERENCE_NC_PTR_WRITE(my_nc_ptr, 5);
+    NC_PTR_DEREFERENCE_WRITE(my_nc_ptr, 5);
     assert(*my_raw_ptr == 5);
     /* 
         We can also pass the raw pointer to a function that does
@@ -90,8 +90,8 @@ int main() {
         In this case OutputVariable_UNSAFE cannot correctly
         handle a NULL pointer so this is very risky.0
     */
-    OutputVariable_UNSAFE(UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR_NO_NULL_CHECK(my_nc_ptr));
-    assert(*UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR_NO_NULL_CHECK(my_nc_ptr) == 5);
+    OutputVariable_UNSAFE(UNSAFE_NC_PTR_CONVERT_TO_RAW_PTR_NO_NULL_CHECK(my_nc_ptr));
+    assert(*UNSAFE_NC_PTR_CONVERT_TO_RAW_PTR_NO_NULL_CHECK(my_nc_ptr) == 5);
 
     return 0;
 }
