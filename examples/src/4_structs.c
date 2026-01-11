@@ -45,6 +45,7 @@ int main() {
     for(i=0; i<image_size; i++) {
         unsigned char image_element = 0;
         DEREFERENCE_NC_PTR_READ_OFFSET(image_element, nc_image_data_copy, i);
+        assert(image_element == original_image[i]);
         printf("original image element %i = %i\n", (int)i, image_element);
     }
 
@@ -54,6 +55,7 @@ int main() {
     for(i=0; i<image_size; i++) {
         unsigned char image_element = 0;
         DEREFERENCE_NC_PTR_READ_OFFSET(image_element, nc_image_data_copy, i);
+        assert(image_element == new_image[i]);
         printf("updated image element %i = %i\n", (int)i, image_element);
     }
 
@@ -63,8 +65,15 @@ int main() {
     for(i=0; i<image_size; i++) {
         unsigned char image_element = 0;
         DEREFERENCE_NC_PTR_READ_OFFSET(image_element, nc_image_data_copy, i);
+        assert(image_element == new_image_2[i]);
         printf("updated image 2 element %i = %i\n", (int)i, image_element);
     }
+
+    /*
+        If you have a NULL checked pointer to the struct then you can either
+        dereference it or use UNSAFE_CONVERT_NC_PTR_TO_RAW_PTR and then proceed
+        as above
+    */
 
     return 0;
 }
