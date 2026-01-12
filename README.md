@@ -116,6 +116,50 @@ your compiler doesn't let you turn off problematic optimisations, then you can s
 NC_PTR_DISABLE_NULL_CHECKS=1 when compiling which will remove the compile time checks and replace
 them with runtime asserts.
 
+## Why not just use static analysis tools?
+
+I found that my approach here will detect errors that clang-tidy (version 21.1.6) would not.
+At the time of writing I found that if I run clang-tidy against all build_failure examples `clang-tidy --checks='*,-llvmlibc-restrict-system-libc-headers' examples/src/*failure* -- -I single_include -Og`
+it only finds a potential NULL dereference in examples/src/6_build_failure_dereference_write_null.c. Using this library all of the build failure examples fail to build due to potential NULL dereferences.
+
+## Why not just use [static 1]
+
+Using `[static 1]` on function parameters does tell the compiler that the argument should never be NULL but it doesn't always catch errors in situations where the pointer may be NULL only under certain conditions. Furthermore, it can only be applied to function parameters.
+For example this code (which is very similar to examples/src/14_build_failure_dereference_read_null_on_one_branch.c) compiles fine (using GCC 15.2.1) with `gcc -Wall -Wextra -Wpedantic -Werror -std=c99 -O3`.
+
+```c++
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+void PrintPtr(int some_ptr[static 1]) {
+    printf("*some_ptr = %i", *some_ptr);
+}
+
+int main(void) {
+    int foo = 2;
+    int* my_ptr = &foo;
+
+    srand((unsigned int)time(NULL));
+    if(rand() & 1) {
+        my_ptr = NULL;
+    }
+
+    /* Pointer may be NULL */
+    PrintPtr(my_ptr);
+
+    return 0;
+}
+```
+
+Using `[static 1]` does catch some issues such as `PrintPtr(NULL)` but it is not as robust.
+
+## Why not just use __attribute__((nonnull(1)))
+
+If you modify the above example to use __attribute__((nonnull(1))) it still doesn't detect the potential NULL deference. Also, this is a non-standard extension available in GCC but it may not be available in other compilers. Again this also only applies to function parameters and not local variables.
+
 ## Development
 
 In order to automatically test the library build it in debug mode and then run ctest.
