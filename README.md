@@ -34,10 +34,9 @@ int my_nc_ptr_value = 0;
 
 srand((unsigned int)time(NULL));
 if(rand() & 1) {
-    NC_PTR_ASSIGN(my_nc_ptr, NULL);
+    _PRIVATE_NC_PTR_DO_NOT_TOUCH_my_nc_ptr = NULL;
 }
 
-_PRIVATE_NC_PTR_DO_NOT_TOUCH_my_nc_ptr = NULL;
 {
     {
         void null_dereference_of_my_nc_ptr_possible_in_file_build_failure_dereference_read_null_c_on_line_13 (void);
